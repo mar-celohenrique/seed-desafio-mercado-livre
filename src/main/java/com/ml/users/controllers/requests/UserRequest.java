@@ -1,5 +1,6 @@
 package com.ml.users.controllers.requests;
 
+import com.ml.commons.validations.UniqueValue;
 import com.ml.users.entities.User;
 
 import javax.validation.constraints.Email;
@@ -10,6 +11,7 @@ public class UserRequest {
 
     @NotBlank
     @Email
+    @UniqueValue(columnName = "login", domainClass = User.class)
     private final String login;
 
     @NotBlank
