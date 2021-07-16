@@ -2,9 +2,9 @@ package com.ml.users.entities;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
+import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,7 +19,7 @@ import javax.validation.constraints.NotNull;
 import java.time.Instant;
 
 @Entity
-@EntityListeners(AuditingEntityListener.class)
+@EntityListeners({AuditingEntityListener.class, UserListener.class})
 @Getter
 public class User {
 
@@ -32,6 +32,7 @@ public class User {
 
     @Column(nullable = false)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @Setter
     private String password;
 
     @Column(nullable = false, updatable = false)
@@ -45,7 +46,7 @@ public class User {
 
     public User(@NotBlank @Email String login, @NotBlank @Min(6) String password) {
         this.login = login;
-        this.password = new BCryptPasswordEncoder().encode(password);
+        this.password = password;
     }
 
 }

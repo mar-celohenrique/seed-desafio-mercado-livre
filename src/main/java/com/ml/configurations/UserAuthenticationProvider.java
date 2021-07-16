@@ -21,7 +21,7 @@ import java.util.Optional;
 @Configuration
 @Slf4j
 @RequiredArgsConstructor
-public class CustomAuthenticationProvider implements AuthenticationProvider {
+public class UserAuthenticationProvider implements AuthenticationProvider {
 
     @PersistenceContext
     private EntityManager manager;

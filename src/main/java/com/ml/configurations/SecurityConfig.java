@@ -14,17 +14,17 @@ import org.springframework.security.core.context.SecurityContextHolder;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final CustomAuthenticationProvider customAuthenticationProvider;
+    private final UserAuthenticationProvider userAuthenticationProvider;
 
     @Autowired
-    public SecurityConfig(CustomAuthenticationProvider customAuthenticationProvider) {
-        this.customAuthenticationProvider = customAuthenticationProvider;
+    public SecurityConfig(UserAuthenticationProvider userAuthenticationProvider) {
+        this.userAuthenticationProvider = userAuthenticationProvider;
         SecurityContextHolder.setStrategyName(SecurityContextHolder.MODE_INHERITABLETHREADLOCAL);
     }
 
     @Override
     public void configure(AuthenticationManagerBuilder builder) {
-        builder.authenticationProvider(this.customAuthenticationProvider);
+        builder.authenticationProvider(this.userAuthenticationProvider);
     }
 
     @Bean(BeanIds.AUTHENTICATION_MANAGER)
