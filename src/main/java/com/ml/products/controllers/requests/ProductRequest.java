@@ -2,6 +2,7 @@ package com.ml.products.controllers.requests;
 
 import com.ml.categories.entities.Category;
 import com.ml.commons.validations.ExistsValue;
+import com.ml.commons.validations.UniqueValue;
 import com.ml.products.entities.Product;
 import lombok.Getter;
 import org.hibernate.validator.constraints.Length;
@@ -20,6 +21,7 @@ import java.util.List;
 public class ProductRequest {
 
     @NotBlank
+    @UniqueValue(columnName = "name", domainClass = Product.class)
     private final String name;
 
     @NotNull
