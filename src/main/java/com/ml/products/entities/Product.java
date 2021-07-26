@@ -6,11 +6,14 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.UniqueElements;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.util.Assert;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -24,6 +27,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
+import java.time.Instant;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -32,6 +36,7 @@ import java.util.stream.Collectors;
 @Entity
 @EqualsAndHashCode(of = {"name"})
 @Getter
+@EntityListeners(AuditingEntityListener.class)
 public class Product {
 
     @Id
@@ -56,6 +61,11 @@ public class Product {
     @ManyToOne(optional = false)
     @JoinColumn(referencedColumnName = "id")
     private Category category;
+
+    @Column(nullable = false, updatable = false)
+    @NotNull
+    @CreatedDate
+    private Instant creationDate;
 
     @Deprecated
     public Product() {
