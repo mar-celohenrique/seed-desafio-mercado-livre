@@ -29,12 +29,14 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
+        int oneDayInSeconds = 86400;
+
         clients.inMemory()
                 .withClient("ml_client")
                 .secret(this.passwordEncoder.encode("ml"))
                 .scopes("read", "write")
                 .authorizedGrantTypes("password")
-                .accessTokenValiditySeconds(3600);
+                .accessTokenValiditySeconds(oneDayInSeconds);
     }
 
     @Override

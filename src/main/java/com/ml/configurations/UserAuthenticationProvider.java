@@ -1,6 +1,7 @@
 package com.ml.configurations;
 
 import com.ml.users.entities.User;
+import com.ml.users.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Configuration;
@@ -12,9 +13,6 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import java.util.List;
 
 import static java.util.Objects.nonNull;
@@ -24,8 +22,7 @@ import static java.util.Objects.nonNull;
 @RequiredArgsConstructor
 public class UserAuthenticationProvider implements AuthenticationProvider {
 
-    @PersistenceContext
-    private EntityManager manager;
+    private final UserRepository repository;
 
     private final PasswordEncoder passwordEncoder;
 
@@ -35,10 +32,7 @@ public class UserAuthenticationProvider implements AuthenticationProvider {
             String login = authentication.getPrincipal().toString();
             String password = authentication.getCredentials().toString();
 
-            Query query = this.manager.createQuery("select user from User user where user.login = :login");
-            query.setParameter("login", login);
-
-            User user = (User) query.getSingleResult();
+            User user = this.repository.findByLogin(login).orElseThrow(() -> new BadCredentialsException("Bad credentials."));
 
             if (nonNull(user)) {
                 if (this.passwordEncoder.matches(password, user.getPassword())) {

@@ -4,6 +4,7 @@ import com.ml.categories.entities.Category;
 import com.ml.commons.validations.ExistsValue;
 import com.ml.commons.validations.UniqueValue;
 import com.ml.products.entities.Product;
+import com.ml.users.entities.User;
 import lombok.Getter;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.UniqueElements;
@@ -62,7 +63,7 @@ public class ProductRequest {
         this.categoryId = categoryId;
     }
 
-    public Product toModel(EntityManager manager) {
+    public Product toModel(EntityManager manager, User user) {
         @NotNull Category category = manager.find(Category.class, this.categoryId);
 
         return new Product(this.name,
@@ -70,7 +71,8 @@ public class ProductRequest {
                 this.quantityAvailable,
                 this.characteristics,
                 this.description,
-                category);
+                category,
+                user);
     }
 
     @Override

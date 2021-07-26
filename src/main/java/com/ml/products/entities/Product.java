@@ -2,6 +2,7 @@ package com.ml.products.entities;
 
 import com.ml.categories.entities.Category;
 import com.ml.products.controllers.requests.ProductCharacteristicRequest;
+import com.ml.users.entities.User;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import org.hibernate.validator.constraints.Length;
@@ -53,7 +54,7 @@ public class Product {
     private Long quantityAvailable;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.PERSIST)
-    private Set<ProductCharacteristic> characteristics = new HashSet<>();
+    private final Set<ProductCharacteristic> characteristics = new HashSet<>();
 
     @Column(name = "description", nullable = false, length = 1000)
     private String description;
@@ -61,6 +62,10 @@ public class Product {
     @ManyToOne(optional = false)
     @JoinColumn(referencedColumnName = "id")
     private Category category;
+
+    @ManyToOne(optional = false)
+    @JoinColumn(referencedColumnName = "id")
+    private User owner;
 
     @Column(nullable = false, updatable = false)
     @NotNull
@@ -76,13 +81,15 @@ public class Product {
                    @NotNull @Positive final Long quantityAvailable,
                    final @NotEmpty @Size(min = 3) @UniqueElements @Valid List<ProductCharacteristicRequest> characteristics,
                    @NotBlank @Length(max = 1000) final String description,
-                   @NotNull final Category category) {
+                   @NotNull @Valid final Category category,
+                   @NotNull @Valid final User owner) {
         this.name = name;
         this.price = price;
         this.quantityAvailable = quantityAvailable;
         this.characteristics.addAll(characteristics.stream().map(c -> c.toModel(this)).collect(Collectors.toSet()));
         this.description = description;
         this.category = category;
+        this.owner = owner;
 
         Assert.isTrue(this.characteristics.size() >= 3, "The product must have at least 3 characteristics");
     }
