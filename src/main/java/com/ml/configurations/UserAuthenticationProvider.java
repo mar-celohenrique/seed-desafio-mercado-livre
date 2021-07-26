@@ -16,7 +16,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.util.List;
-import java.util.Optional;
+
+import static java.util.Objects.nonNull;
 
 @Configuration
 @Slf4j
@@ -37,10 +38,9 @@ public class UserAuthenticationProvider implements AuthenticationProvider {
             Query query = this.manager.createQuery("select user from User user where user.login = :login");
             query.setParameter("login", login);
 
-            Optional<User> userOptional = Optional.ofNullable((User) query.getSingleResult());
+            User user = (User) query.getSingleResult();
 
-            if (userOptional.isPresent()) {
-                User user = userOptional.get();
+            if (nonNull(user)) {
                 if (this.passwordEncoder.matches(password, user.getPassword())) {
                     return new UsernamePasswordAuthenticationToken(user.getLogin(),
                             user.getPassword(),

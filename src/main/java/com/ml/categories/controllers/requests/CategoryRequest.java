@@ -18,7 +18,7 @@ public class CategoryRequest {
     @ExistsValue(fieldName = "id", domainClass = Category.class)
     private final Long categoryId;
 
-    public CategoryRequest(@NotBlank String name, Long categoryId) {
+    public CategoryRequest(@NotBlank final String name, final Long categoryId) {
         this.name = name;
         this.categoryId = categoryId;
     }
@@ -32,4 +32,5 @@ public class CategoryRequest {
 
         return category;
     }
+
 }

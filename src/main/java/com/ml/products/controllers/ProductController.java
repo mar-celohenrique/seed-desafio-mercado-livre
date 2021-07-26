@@ -1,7 +1,7 @@
-package com.ml.categories.controllers;
+package com.ml.products.controllers;
 
-import com.ml.categories.controllers.requests.CategoryRequest;
-import com.ml.categories.entities.Category;
+import com.ml.products.controllers.requests.ProductRequest;
+import com.ml.products.entities.Product;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,17 +12,17 @@ import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 @RestController
-public class CategoryController {
+public class ProductController {
 
     @PersistenceContext
     private EntityManager manager;
 
-    @PostMapping("/categories")
+    @PostMapping("/products")
     @Transactional
-    public Category create(@RequestBody @Valid CategoryRequest request) {
-        Category category = request.toModel(this.manager);
-        this.manager.persist(category);
-        return category;
+    public Product create(@RequestBody @Valid ProductRequest request) {
+        Product product = request.toModel(this.manager);
+        this.manager.persist(product);
+        return product;
     }
 
 }
