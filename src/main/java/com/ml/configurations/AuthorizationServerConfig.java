@@ -1,5 +1,6 @@
 package com.ml.configurations;
 
+import com.ml.configurations.token.UserTokenEnhancer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,7 +26,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
     private final PasswordEncoder passwordEncoder;
 
-    private final CustomTokenEnhancer customTokenEnhancer;
+    private final UserTokenEnhancer userTokenEnhancer;
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
@@ -42,7 +43,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
         TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();
-        tokenEnhancerChain.setTokenEnhancers(Arrays.asList(this.customTokenEnhancer,
+        tokenEnhancerChain.setTokenEnhancers(Arrays.asList(this.userTokenEnhancer,
                 this.accessTokenConverter()));
 
         endpoints.tokenStore(this.tokenStore())
