@@ -1,6 +1,6 @@
 package com.ml.configurations;
 
-import com.ml.configurations.expressions.UserMethodSecurityExpressionHandler;
+import com.ml.configurations.security.expressions.UserMethodSecurityExpressionHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.access.expression.method.MethodSecurityExpressionHandler;

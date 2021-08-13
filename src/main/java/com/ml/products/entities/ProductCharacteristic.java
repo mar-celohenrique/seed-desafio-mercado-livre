@@ -1,8 +1,8 @@
 package com.ml.products.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import org.hibernate.Hibernate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,9 +14,9 @@ import javax.persistence.ManyToOne;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.Objects;
 
 @Entity
-@EqualsAndHashCode(of = {"name"})
 @Getter
 public class ProductCharacteristic {
 
@@ -45,6 +45,20 @@ public class ProductCharacteristic {
         this.name = name;
         this.description = description;
         this.product = product;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        ProductCharacteristic that = (ProductCharacteristic) o;
+
+        return Objects.nonNull(id) ? Objects.equals(id, that.id) : Objects.equals(name, that.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return 1239812895;
     }
 
 }

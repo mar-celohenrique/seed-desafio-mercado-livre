@@ -3,8 +3,8 @@ package com.ml.products.entities;
 import com.ml.categories.entities.Category;
 import com.ml.products.controllers.requests.ProductCharacteristicRequest;
 import com.ml.users.entities.User;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import org.hibernate.Hibernate;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.UniqueElements;
 import org.springframework.data.annotation.CreatedDate;
@@ -31,11 +31,11 @@ import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 @Entity
-@EqualsAndHashCode(of = {"name"})
 @Getter
 @EntityListeners(AuditingEntityListener.class)
 public class Product {
@@ -92,6 +92,24 @@ public class Product {
         this.owner = owner;
 
         Assert.isTrue(this.characteristics.size() >= 3, "The product must have at least 3 characteristics");
+    }
+
+    public boolean belongsToUser(User user) {
+        return this.owner.equals(user);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Product product = (Product) o;
+
+        return Objects.nonNull(id) ? Objects.equals(id, product.id) : Objects.equals(name, product.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return 2042274511;
     }
 
 }

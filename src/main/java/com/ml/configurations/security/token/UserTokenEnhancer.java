@@ -1,4 +1,4 @@
-package com.ml.configurations.token;
+package com.ml.configurations.security.token;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;

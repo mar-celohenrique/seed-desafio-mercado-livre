@@ -1,4 +1,4 @@
-package com.ml.configurations.token.validations;
+package com.ml.configurations.security.token.validations;
 
 import org.springframework.security.core.Authentication;
 

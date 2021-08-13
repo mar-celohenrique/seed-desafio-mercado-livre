@@ -1,6 +1,6 @@
 package com.ml.configurations;
 
-import com.ml.configurations.token.UserTokenEnhancer;
+import com.ml.configurations.security.token.UserTokenEnhancer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

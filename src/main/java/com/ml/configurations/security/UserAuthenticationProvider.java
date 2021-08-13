@@ -1,4 +1,4 @@
-package com.ml.configurations;
+package com.ml.configurations.security;
 
 import com.ml.users.entities.User;
 import com.ml.users.repositories.UserRepository;

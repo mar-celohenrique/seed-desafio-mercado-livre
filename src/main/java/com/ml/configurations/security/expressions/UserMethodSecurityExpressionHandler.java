@@ -1,7 +1,7 @@
-package com.ml.configurations.expressions;
+package com.ml.configurations.security.expressions;
 
-import com.ml.configurations.token.validations.AccessValidatorType;
-import com.ml.configurations.token.validations.SecurityValidation;
+import com.ml.configurations.security.token.validations.AccessValidatorType;
+import com.ml.configurations.security.token.validations.SecurityValidation;
 import lombok.RequiredArgsConstructor;
 import org.aopalliance.intercept.MethodInvocation;
 import org.springframework.context.annotation.Configuration;

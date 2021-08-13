@@ -1,7 +1,7 @@
-package com.ml.configurations.expressions;
+package com.ml.configurations.security.expressions;
 
-import com.ml.configurations.token.validations.AccessValidatorType;
-import com.ml.configurations.token.validations.SecurityValidation;
+import com.ml.configurations.security.token.validations.AccessValidatorType;
+import com.ml.configurations.security.token.validations.SecurityValidation;
 import org.springframework.security.access.expression.SecurityExpressionRoot;
 import org.springframework.security.access.expression.method.MethodSecurityExpressionOperations;
 import org.springframework.security.core.Authentication;
@@ -23,7 +23,7 @@ public class UserExpressionRoot extends SecurityExpressionRoot implements Method
      * Creates a new instance
      *
      * @param authentication the {@link Authentication} to use. Cannot be null.
-     * @param validators the map of SecurityValidation and types
+     * @param validators     the map of SecurityValidation and types
      */
     public UserExpressionRoot(Authentication authentication, Map<AccessValidatorType, SecurityValidation> validators) {
         super(authentication);
@@ -31,9 +31,14 @@ public class UserExpressionRoot extends SecurityExpressionRoot implements Method
     }
 
     public boolean hasPermissionToManageProduct(Long productId) {
-        SecurityValidation securityValidation = Optional.ofNullable(this.validators.get(AccessValidatorType.PRODUCT))
-                .orElseThrow();
-        return nonNull(productId) && securityValidation.hasEntityAccess(super.authentication, productId);
+        if (nonNull(productId)) {
+            SecurityValidation securityValidation = Optional.ofNullable(this.validators.get(AccessValidatorType.PRODUCT))
+                    .orElseThrow();
+
+            return securityValidation.hasEntityAccess(super.authentication, productId);
+        }
+
+        return true;
     }
 
     @Override

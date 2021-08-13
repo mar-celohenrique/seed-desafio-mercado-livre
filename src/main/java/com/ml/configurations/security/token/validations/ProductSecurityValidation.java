@@ -1,6 +1,6 @@
-package com.ml.configurations.token.validations;
+package com.ml.configurations.security.token.validations;
 
-import com.ml.configurations.UserAuthenticationExtractor;
+import com.ml.configurations.security.UserAuthenticationExtractor;
 import com.ml.products.entities.Product;
 import com.ml.users.entities.User;
 import lombok.RequiredArgsConstructor;
@@ -29,14 +29,14 @@ public class ProductSecurityValidation implements SecurityValidation {
     @Override
     @Transactional
     public boolean hasEntityAccess(Authentication authentication, Long id) {
-        User currentUser = this.userAuthenticationExtractor.getCurrentUser((String) authentication.getPrincipal());
+        User currentUser = this.userAuthenticationExtractor.getCurrentUserFromAuthentication(authentication);
         Product product = this.manager.find(Product.class, id);
 
         Assert.notNull(currentUser, "The user must be not null");
         Assert.notNull(product, "The product must be not null");
         Assert.notNull(product.getOwner(), "The product owner must be not null");
 
-        return product.getOwner().getId().equals(currentUser.getId());
+        return product.belongsToUser(currentUser);
     }
 
 }

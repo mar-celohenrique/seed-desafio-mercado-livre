@@ -1,9 +1,11 @@
 package com.ml.products.controllers;
 
-import com.ml.configurations.AuthenticatedUser;
+import com.ml.configurations.security.AuthenticatedUser;
 import com.ml.products.controllers.requests.ProductRequest;
 import com.ml.products.entities.Product;
 import com.ml.users.entities.User;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;

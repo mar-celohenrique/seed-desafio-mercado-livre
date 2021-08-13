@@ -1,6 +1,6 @@
-package com.ml.configurations;
+package com.ml.configurations.security;
 
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.annotation.CurrentSecurityContext;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -11,6 +11,7 @@ import java.lang.annotation.Target;
 @Target({ElementType.PARAMETER, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-@AuthenticationPrincipal(expression = "@userAuthenticationExtractor.getCurrentUser(#this)", errorOnInvalidType = true)
+@CurrentSecurityContext(expression = "@userAuthenticationExtractor.getCurrentUser(#this.getAuthentication())",
+        errorOnInvalidType = true)
 public @interface AuthenticatedUser {
 }
