@@ -6,7 +6,6 @@ import com.ml.users.entities.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
-import org.springframework.util.Assert;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -32,9 +31,9 @@ public class ProductSecurityValidation implements SecurityValidation {
         User currentUser = this.userAuthenticationExtractor.getCurrentUserFromAuthentication(authentication);
         Product product = this.manager.find(Product.class, id);
 
-        Assert.notNull(currentUser, "The user must be not null");
-        Assert.notNull(product, "The product must be not null");
-        Assert.notNull(product.getOwner(), "The product owner must be not null");
+        if (currentUser == null || product == null || product.getOwner() == null) {
+            return true;
+        }
 
         return product.belongsToUser(currentUser);
     }

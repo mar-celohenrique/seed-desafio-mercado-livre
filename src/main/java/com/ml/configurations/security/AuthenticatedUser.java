@@ -11,7 +11,7 @@ import java.lang.annotation.Target;
 @Target({ElementType.PARAMETER, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-@CurrentSecurityContext(expression = "@userAuthenticationExtractor.getCurrentUser(#this.getAuthentication())",
+@CurrentSecurityContext(expression = "@userAuthenticationExtractor.getCurrentUserFromAuthentication(#this.getAuthentication())",
         errorOnInvalidType = true)
 public @interface AuthenticatedUser {
 }

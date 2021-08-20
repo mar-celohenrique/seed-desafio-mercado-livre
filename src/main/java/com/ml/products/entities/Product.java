@@ -67,6 +67,9 @@ public class Product {
     @JoinColumn(referencedColumnName = "id")
     private User owner;
 
+    @OneToMany(mappedBy = "product", cascade = CascadeType.MERGE)
+    private final Set<Picture> pictures = new HashSet<>();
+
     @Column(nullable = false, updatable = false)
     @NotNull
     @CreatedDate
@@ -96,6 +99,10 @@ public class Product {
 
     public boolean belongsToUser(User user) {
         return this.owner.equals(user);
+    }
+
+    public void addPictures(Set<Picture> pictures) {
+        this.pictures.addAll(pictures);
     }
 
     @Override
