@@ -21,6 +21,12 @@ public class AddPictureRequest {
     @Valid
     private List<NewPictureRequest> pictures;
 
+    public AddPictureRequest(@Size(min = 1)
+                             @NotEmpty
+                             @Valid final List<NewPictureRequest> pictures) {
+        this.pictures = pictures;
+    }
+
     public Set<Picture> toModel(Product product) {
         return this.pictures.stream()
                 .map(picture -> new Picture(picture.getType(), picture.getBase64(), product))

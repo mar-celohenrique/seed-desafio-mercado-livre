@@ -11,12 +11,16 @@ import javax.validation.constraints.NotNull;
 @Setter
 public class NewPictureRequest {
 
-    @Getter
     @NotEmpty
     private String base64;
 
-    @Getter
     @NotNull
     private PictureType type;
+
+    public NewPictureRequest(@NotEmpty final String base64,
+                             @NotNull final PictureType type) {
+        this.base64 = base64;
+        this.type = type;
+    }
 
 }

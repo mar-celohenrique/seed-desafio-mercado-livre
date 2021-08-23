@@ -11,6 +11,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
+import static java.util.Objects.isNull;
+
 @Component
 @RequiredArgsConstructor
 public class ProductSecurityValidation implements SecurityValidation {
@@ -31,7 +33,7 @@ public class ProductSecurityValidation implements SecurityValidation {
         User currentUser = this.userAuthenticationExtractor.getCurrentUserFromAuthentication(authentication);
         Product product = this.manager.find(Product.class, id);
 
-        if (currentUser == null || product == null || product.getOwner() == null) {
+        if (isNull(currentUser) || isNull(product) || isNull(product.getOwner())) {
             return true;
         }
 

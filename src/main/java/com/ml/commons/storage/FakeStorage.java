@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 public class FakeStorage implements StorageClient {
 
     @Override
-    public Set<Picture> send(Set<Picture> pictures) {
+    public Set<Picture> store(Set<Picture> pictures) {
         return pictures.stream().peek(picture -> {
             picture.setBase64(null);
             picture.setLink("https://source.unsplash.com/random/".concat(picture.getName()));

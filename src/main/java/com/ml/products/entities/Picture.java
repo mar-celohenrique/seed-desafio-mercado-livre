@@ -15,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
+import java.text.Normalizer;
 import java.util.Locale;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -62,8 +63,13 @@ public class Picture {
 
     private String generateRandomName() {
         Assert.notNull(this.product, "The product must be not null");
+        Assert.notNull(this.product.getName(), "The product name must be not null");
+
         int sizeName = this.product.getName().length();
-        return this.product.getName()
+        String productName = Normalizer.normalize(this.product.getName(), Normalizer.Form.NFD)
+                .replaceAll("[^\\p{ASCII}]", "");
+
+        return productName
                 .substring(0, Math.min(sizeName, 12))
                 .toLowerCase(Locale.ROOT)
                 .replaceAll(" ", "_").concat("_" + ThreadLocalRandom.current().nextInt());

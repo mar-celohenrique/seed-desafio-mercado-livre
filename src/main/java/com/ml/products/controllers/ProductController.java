@@ -46,7 +46,7 @@ public class ProductController {
     public Product addPicture(@PathVariable("id") Long id, @RequestBody @Valid AddPictureRequest request) {
         Product product = Optional.ofNullable(this.manager.find(Product.class, id))
                 .orElseThrow(() -> new EntityNotFoundException("Product [" + id + "] not found!"));
-        Set<Picture> pictures = this.storageClient.send(request.toModel(product));
+        Set<Picture> pictures = this.storageClient.store(request.toModel(product));
         product.addPictures(pictures);
         this.manager.merge(product);
         return product;

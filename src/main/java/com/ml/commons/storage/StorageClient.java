@@ -6,6 +6,6 @@ import java.util.Set;
 
 public interface StorageClient {
 
-    Set<Picture> send(Set<Picture> pictures);
+    Set<Picture> store(Set<Picture> pictures);
 
 }
