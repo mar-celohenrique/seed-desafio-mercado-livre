@@ -3,6 +3,7 @@ package com.ml.products.entities;
 import com.ml.categories.entities.Category;
 import com.ml.opinions.entities.Opinion;
 import com.ml.products.controllers.requests.ProductCharacteristicRequest;
+import com.ml.questions.entities.Question;
 import com.ml.users.entities.User;
 import lombok.Getter;
 import org.hibernate.Hibernate;
@@ -73,6 +74,9 @@ public class Product {
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.MERGE)
     private final Set<Opinion> opinions = new HashSet<>();
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.MERGE)
+    private final Set<Question> questions = new HashSet<>();
 
     @Column(nullable = false, updatable = false)
     @NotNull
