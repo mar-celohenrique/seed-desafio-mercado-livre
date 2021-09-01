@@ -4,9 +4,12 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.ml.products.entities.Product;
 import com.ml.users.entities.User;
 import lombok.Getter;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,8 +18,10 @@ import javax.persistence.ManyToOne;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.time.Instant;
 
 @Getter
+@EntityListeners(AuditingEntityListener.class)
 @Entity
 public class Question {
 
@@ -35,6 +40,11 @@ public class Question {
     @ManyToOne(optional = false)
     @JoinColumn(referencedColumnName = "id")
     private User user;
+
+    @Column(nullable = false, updatable = false)
+    @NotNull
+    @CreatedDate
+    private Instant creationDate;
 
     public Question() {
     }
