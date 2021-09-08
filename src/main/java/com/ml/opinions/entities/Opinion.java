@@ -28,7 +28,7 @@ public class Opinion {
     private Long id;
 
     @Column(name = "note", nullable = false)
-    private Integer note;
+    private Integer grade;
 
     @Column(name = "title", nullable = false)
     private String title;
@@ -51,13 +51,13 @@ public class Opinion {
 
     public Opinion(@NotNull
                    @Min(1)
-                   @Max(5) final Integer note,
+                   @Max(5) final Integer grade,
                    @NotBlank final String title,
                    @NotBlank
                    @Length(max = 500) final String description,
                    @NotNull @Valid final Product product,
                    @NotNull @Valid final User user) {
-        this.note = note;
+        this.grade = grade;
         this.title = title;
         this.description = description;
         this.product = product;

@@ -35,6 +35,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Entity
@@ -111,6 +114,20 @@ public class Product {
 
     public void addPictures(Set<Picture> pictures) {
         this.pictures.addAll(pictures);
+    }
+
+    public <T> Set<T> mapCharacteristics(Function<ProductCharacteristic, T> mapperFunction) {
+        return this.characteristics.stream().map(mapperFunction).collect(Collectors.toSet());
+    }
+
+    public <T> Set<T> mapPictures(Function<Picture, T> mapperFunction) {
+        return this.pictures.stream().map(mapperFunction)
+                .collect(Collectors.toSet());
+    }
+
+    public <T extends Comparable<T>> SortedSet<T> mapQuestions(Function<Question, T> mapperFunction) {
+        return this.questions.stream().map(mapperFunction)
+                .collect(Collectors.toCollection(TreeSet::new));
     }
 
     @Override
